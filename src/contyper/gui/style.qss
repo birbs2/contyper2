@@ -1,0 +1,29 @@
+QMainWindow {
+    background-color: white;
+}
+
+QLabel {
+    font-family: Open Sans;
+}
+
+QLabel#title {
+    font-size: 24pt;
+}
+
+QLabel#section_title {
+    font-size: 20pt;
+}
+
+QLabel#entry_symbol {
+    font-size: 14pt;
+    border: 1px solid #888888;
+}
+
+QLabel#entry_modifier {
+    font-size: 20pt;
+}
+
+QLabel#other_loops {
+    font-size: 14pt;
+    font-weight: bold;
+}

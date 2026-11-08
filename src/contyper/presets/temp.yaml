@@ -1,0 +1,13 @@
+title: pel
+layers: 3
+sections:
+  characters:
+    - 0 a: [â, ɑ]
+    - 0 c: [č, tʃ]
+    - 0 d: [ḍ, d̪]
+    - 0 o: [ö, ø]
+    - 0 s: [š, ʃ]
+    - 0 t: [ṭ, t̪]
+    - 0 u: [ü]
+    - 0 x: [χ]
+    - 0 z: [ž, ʒ]

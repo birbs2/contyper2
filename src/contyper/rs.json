@@ -1,0 +1,72 @@
+[
+  {
+    "layer": 0,
+    "entry": "a",
+    "loop": [
+      "â",
+      "ɑ"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "c",
+    "loop": [
+      "č",
+      "tʃ"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "d",
+    "loop": [
+      "ḍ",
+      "d̪"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "o",
+    "loop": [
+      "ö",
+      "ø"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "s",
+    "loop": [
+      "š",
+      "ʃ"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "t",
+    "loop": [
+      "ṭ",
+      "t̪"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "u",
+    "loop": [
+      "ü"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "x",
+    "loop": [
+      "χ"
+    ]
+  },
+  {
+    "layer": 0,
+    "entry": "z",
+    "loop": [
+      "ž",
+      "ʒ"
+    ]
+  }
+]

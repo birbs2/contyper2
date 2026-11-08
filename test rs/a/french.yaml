@@ -1,0 +1,10 @@
+title: french
+layers: 2
+sections:
+  characters:
+    - 0 a: [à, â, æ]
+    - 0 c: [ç]
+    - 0 e: [é, è, ê, ë]
+    - 0 u: [ù, û, ü]
+  symbols:
+    - 1 c: [€]
