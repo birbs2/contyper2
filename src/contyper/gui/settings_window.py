@@ -93,17 +93,6 @@ class KeybindWidget(QWidget):
             cf.set("Shortcuts", str(index), ",".join([str(i) for i in layer]))
         cf.write_()
 
-class KeybindWidget2(QWidget):
-    def __init__(self, parent):
-        """
-        loads data from ini file (which is not kept in memory when the SettingsWindow is closed)
-        """
-        super().__init__()
-        self.parent_ = parent
-
-
-
-
 class ModifierKeysWindow(QDialog):
     def __init__(self, codes):
         super().__init__()
