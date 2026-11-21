@@ -1,6 +1,5 @@
 ﻿#Include JSON.ahk
 #SingleInstance Force
-#NoTrayIcon
 
 FileEncoding("UTF-8")
 
@@ -109,7 +108,7 @@ class Ruleset {
             hk := join(this.loopHotKeys[layer + 1]) . loop_["entry"]
             Hotkey(
                 hk,
-                ((_, l, lyr) => print(l . ": " . join(this.step(l, lyr), " -> "))).Bind(, loop_["entry"], layer + 1)
+                ((_, l, lyr) => this.step(l, lyr)).Bind(, loop_["entry"], layer + 1)
             )
         }
     }
@@ -137,7 +136,6 @@ onEvent(hook, vk, sc) {
     }
 }
 
-ListHotkeys()
 hook := InputHook("V")
 hook.KeyOpt("{All}", "+N")
 hook.OnKeyDown := onEvent

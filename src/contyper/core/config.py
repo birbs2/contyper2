@@ -4,7 +4,8 @@ from pathlib import Path
 import yaml
 
 from src.contyper.core.ruleset import Ruleset
-
+class IniException(Exception):
+    pass
 
 class CTConfig(configparser.ConfigParser):
     def __init__(self):

@@ -5,7 +5,7 @@ from unicodedata import combining
 
 from src.contyper.core.config import config as cf
 from src.contyper.gui.column_layout import FlowLayout
-from src.contyper.gui.main_window import CTMainWindow
+from src.contyper.gui.util import CTWindow
 
 def is_diacrtic(char):
     return (
@@ -13,7 +13,7 @@ def is_diacrtic(char):
             or unicodedata.combining(char) > 0
     )
 
-class ReferenceWindow(CTMainWindow):
+class Reference(CTWindow):
     def __init__(self):
         self.widget = QWidget()
         super().__init__()
