@@ -8,6 +8,8 @@ class CTWindow(QMainWindow):
 
     def show(self):
         self.init_ui()
+        self.raise_()
+        self.activateWindow()
         super().show()
 
     def init_ui(self):

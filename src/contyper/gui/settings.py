@@ -40,7 +40,6 @@ class KeybindWidget(CTWidget):
         self.keybind_booleans = [[item == "True" for item in layer.split(",")] for layer in per_layer_keybind_booleans]
         self.keycodes = cf.get("Shortcuts", "keycodes").split(",")
         self.keynames = cf.get("Shortcuts", "keynames").split(",")
-        print("inited")
         self.init_ui()
 
     def init_ui(self):
@@ -64,10 +63,7 @@ class KeybindWidget(CTWidget):
             for index, (keycode, keyname) in enumerate(zip(self.keycodes, self.keynames)):
                 button = QPushButton(f"+ {keyname}")
                 button.setCheckable(True)
-                try:
-                    button.setChecked(self.keybind_booleans[layer][index])
-                except:
-                    print(index, self.keybind_booleans[layer])
+                button.setChecked(self.keybind_booleans[layer][index])
                 self.button_grid[-1].append(button)
                 grid.addWidget(button, layer + 1, index + 1)
         save_button = QPushButton("Save")
@@ -84,20 +80,15 @@ class KeybindWidget(CTWidget):
         dialog = ModifierKeysWindow(self.keycodes)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             selected_keys = dialog.get_selected()
-            print("edit_keys dialog saved")
             self.keycodes = selected_keys[0]
-            print(self.keycodes)
             self.keynames = selected_keys[1]
-            print(self.keynames)
             self.init_ui()
 
     def save(self):
         # yeah right it's so pretty :)
         self.keybind_booleans = [[False for _ in enumerate(self.keycodes)]] + [[button.isChecked() if type(button) == QPushButton else button for button in layer] for
                                 layer in self.button_grid]
-        print("Keybind booleans:", self.keybind_booleans)
         if len(self.keybind_booleans) != len(set(tuple(layer) for layer in self.keybind_booleans)):
-            print("multiple layers have the same keybind!")
             return
         cf.set("Shortcuts", "keycodes", ",".join(self.keycodes))
         cf.set("Shortcuts", "keynames", ",".join(self.keynames))
@@ -183,8 +174,8 @@ class FileWidget(CTWidget):
             for file in self.ruleset_directory.rglob("*"):
                 if file.is_file() and file.suffix.lower() in {".yml", ".yaml"}:
                     custom_layout.addWidget(self.create_button(file))
-        except Exception as e:
-            print(e)
+        except OSError:
+            pass
         ruleset_selection_widget.setCurrentIndex(self.current_tab)
         ruleset_selection_widget.currentChanged.connect(self.on_tab_switch)
 
@@ -228,4 +219,3 @@ class FileWidget(CTWidget):
 
     def on_tab_switch(self, index):
         self.current_tab = index
-        print(self.current_tab)

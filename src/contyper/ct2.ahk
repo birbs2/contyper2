@@ -8,7 +8,9 @@ FileEncoding("UTF-8")
 ~RAlt::Send('{Blind}{vkE8}')
 
 print(str := "", end := "`n") {
-    FileAppend(str . end, "*")
+    try {
+        FileAppend(str . end, "*")
+    }
 }
 
 join(arr, del := "") {
@@ -105,7 +107,8 @@ class Ruleset {
     genHotkeys() {
         for loop_ in this.loops {
             layer := Integer(loop_["layer"])
-            hk := join(this.loopHotKeys[layer + 1]) . loop_["entry"]
+            print(loop_["entry"])
+            hk := join(this.loopHotKeys[layer + 1]) . Format("sc{:03X}", GetKeySC(loop_["entry"]))
             Hotkey(
                 hk,
                 ((_, l, lyr) => this.step(l, lyr)).Bind(, loop_["entry"], layer + 1)
@@ -152,7 +155,6 @@ loop {
         rs.__New()
         print("reload")
     }
-
 }
 
 ~LButton::rs.escapeLoop()

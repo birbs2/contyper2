@@ -26,7 +26,6 @@ class Ruleset:
 
     def dump(self, path: Path):
         obj = []
-        print(path)
         for layer_num, layer in enumerate(self.loops):
             for loop in layer.items():
                 obj.append({

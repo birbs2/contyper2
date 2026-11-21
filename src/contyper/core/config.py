@@ -38,7 +38,7 @@ class CTConfig(configparser.ConfigParser):
         try:
             self.ruleset = Ruleset(Path(self.get("Files", "selectedfile")))
         except OSError:
-            self.set("Files", "selectedfile", str(self.joinpath("presets", "ipa.yaml")))
+            self.set("Files", "selectedfile", str(self.joinpath("presets", "CT_ipa.yaml")))
             self.write_()
 
 

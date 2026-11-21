@@ -17,6 +17,7 @@ class RunAction(QAction):
         self.setCheckable(True)
         self.toggled.connect(self.clicked)
         self.proc = None
+        self.trigger()
 
     def clicked(self, state):
         if state:
@@ -25,15 +26,18 @@ class RunAction(QAction):
                 creationflags=subprocess.CREATE_NO_WINDOW,
             )
             self.setText("AHK is Running")
+            self.parent().setIcon(QIcon(str(cf.joinpath("assets", "logo.png"))))
+            self.parent().setToolTip("Contyper 2")
         elif self.proc is not None:
             self.proc.terminate()
             self.setText("Run AHK")
+            self.parent().setIcon(QIcon(str(cf.joinpath("assets", "logo_disabled.png"))))
+            self.parent().setToolTip("Contyper 2 (stopped)")
 
 class TrayIcon(QSystemTrayIcon):
     def __init__(self, app):
-        super().__init__(QIcon(str(cf.joinpath("assets", "logo.png"))))
+        super().__init__()
         self.menu = CTMenu()
-        self.setToolTip("Contyper 2")
         self.app = app
 
         self.reference = Reference()
