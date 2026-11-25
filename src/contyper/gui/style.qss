@@ -1,0 +1,23 @@
+QWidget {
+    font-family: Segoe UI;
+    font-size: 10pt;
+}
+
+QLabel#entryLabel {
+    border: 1px solid dimgray;
+    padding: 0px;
+    border-radius: 5px;
+    font-size: 12pt;
+    background-color: lightgray;
+}
+
+QMenu {
+
+}
+
+QToolButton::menu-indicator {
+    image: none;
+}
+
+QToolButton {
+}

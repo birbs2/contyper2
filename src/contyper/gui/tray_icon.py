@@ -50,6 +50,7 @@ class TrayIcon(QSystemTrayIcon):
     def add_action(self, name, callback):
         a = QAction(name, self)
         a.triggered.connect(callback)
+
         self.menu.addAction(a)
 
     def init_menu(self):

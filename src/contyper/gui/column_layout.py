@@ -1,10 +1,10 @@
 from PyQt6.QtCore import QRect, QSize, QPoint, Qt
 from PyQt6.QtWidgets import (
-    QApplication, QLayout, QLayoutItem, QWidget, QPushButton, QSizePolicy
+    QLayout, QSizePolicy
 )
 
 
-class FlowLayout(QLayout):
+class ColumnLayout(QLayout):
     def __init__(self, parent=None, spacing=-1):
         super().__init__(parent)
         self.setSpacing(spacing)
@@ -39,9 +39,6 @@ class FlowLayout(QLayout):
         super().setGeometry(rect)
         self.do_layout(rect, test_only=False)
 
-    def sizeHint(self):
-        return self.minimumSize()
-
     def minimumSize(self):
         size = QSize()
         for item in self._items:
@@ -53,45 +50,47 @@ class FlowLayout(QLayout):
         )
         return size
 
-    def addWidget(self, widget):
-        super().addWidget(widget)
+    def sizeHint(self):
+        return self.minimumSize()
 
     def do_layout(self, rect, test_only):
+        # gets available rectangle for doing things
         left, top, right, bottom = self.getContentsMargins()
         effective_rect = rect.adjusted(left, top, -right, -bottom)
-        x = effective_rect.x()
-        y = effective_rect.y()
-        line_height = 0
+        # current cursor positions
+        cursor_x = effective_rect.x()
+        cursor_y = effective_rect.y()
+        # width of widest widget in row
+        delta_y = 0
         spacing = self.spacing()
 
         for item in self._items:
             widget = item.widget()
-            space_x = spacing
-            space_y = spacing
-            if widget is not None:
+            # set margins of the widgets
+            space_x = space_y = spacing
+            if widget is not None and spacing < 0:
                 style = widget.style()
-                space_x += style.layoutSpacing(
-                    QSizePolicy.ControlType.PushButton,
-                    QSizePolicy.ControlType.PushButton,
-                    Qt.Orientation.Horizontal,
+
+                control_type = item.controlType()
+                space_x = style.layoutSpacing(
+                    control_type, control_type, Qt.Orientation.Horizontal
                 )
-                space_y += style.layoutSpacing(
-                    QSizePolicy.ControlType.PushButton,
-                    QSizePolicy.ControlType.PushButton,
-                    Qt.Orientation.Vertical,
+                space_y = style.layoutSpacing(
+                    control_type, control_type, Qt.Orientation.Vertical
                 )
 
-            next_x = x + item.sizeHint().width() + space_x
-            if next_x - space_x > effective_rect.right() and line_height > 0:
-                x = effective_rect.x()
-                y = y + line_height + space_y
-                next_x = x + item.sizeHint().width() + space_x
-                line_height = 0
+            next_x = cursor_x + item.sizeHint().width() + space_x
+            # checks if the length goes over
+            if next_x - space_x > effective_rect.right() and delta_y > 0:
+                cursor_x = effective_rect.x()
+                cursor_y += delta_y + space_y
+                next_x = cursor_x + item.sizeHint().width() + space_x
+                delta_y = 0
 
             if not test_only:
-                item.setGeometry(QRect(QPoint(x, y), item.sizeHint()))
+                item.setGeometry(QRect(QPoint(cursor_x, cursor_y), item.sizeHint()))
 
-            x = next_x
-            line_height = max(line_height, item.sizeHint().height())
+            cursor_x = next_x
+            delta_y = max(delta_y, item.sizeHint().height())
 
-        return y + line_height - rect.y() + bottom
+        return cursor_y + delta_y - rect.y() + bottom

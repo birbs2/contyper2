@@ -16,7 +16,7 @@ def change_list_size(L, size):
 
 class Settings(CTWindow):
     def __init__(self):
-        super().__init__()
+        super().__init__("Ct Settings")
 
     def init_ui(self):
         widget = QTabWidget(self)
@@ -75,6 +75,7 @@ class KeybindWidget(CTWidget):
         edit_keys_button = QPushButton("Edit Keys...")
         edit_keys_button.clicked.connect(self.edit_keys)
         grid.addWidget(edit_keys_button, cf.ruleset.num_layers + 1, 2)
+        grid.setRowStretch(grid.rowCount(), 1)
 
     def edit_keys(self):
         dialog = ModifierKeysWindow(self.keycodes)

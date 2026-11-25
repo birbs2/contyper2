@@ -49,18 +49,14 @@ parseHotkeyShorthand(str) {
     return str
 }
 
-parseShortcutIni(str) {
-    shortcuts := StrSplit(str, "|")
-    for index, layer in shortcuts {
-        shortcuts[index] = StrSplit(layer, ",")
-    }
-    return shortcuts
+getFromIni(section, key) {
+    return IniRead("core\options.ini", section, key)
 }
 
 class Ruleset {
     loops := []
-    loopHotKeys := [[">!"], ["<^", ">!"]]
-    lookOutKeys := squish(this.loopHotKeys)
+    loopHotKeys := []
+    lookOutKeys := []
     lastLayer := 1
     lastEntry := ""
     lastIndex := 1
@@ -68,7 +64,29 @@ class Ruleset {
     __New() {
         jFile := FileRead(A_ScriptDir . "\rs.json")
         this.loops := JSON.parse(jFile)
+        this.getLayers()
+        print "don getting layers"
         this.genHotkeys()
+    }
+
+    getLayers() {
+        numLayers := getFromIni("Shortcuts", "layers")
+        keycodes := StrSplit(getFromIni("Shortcuts", "keycodes"), ",")
+        loop numLayers {
+            print A_Index
+            keybindBooleans := StrSplit(getFromIni("Shortcuts", A_Index - 1), ",")
+            layerKeybinds := [">!"]
+            for index, boolean in keybindBooleans {
+                if boolean == "True" {
+                    layerKeybinds.Push(keycodes[index])
+                }
+            }
+            this.loopHotKeys.Push(layerKeybinds)
+        }
+        for layer in this.loopHotKeys {
+            print "--" . join(layer, ", ")
+        }
+        this.lookOutKeys := squish(this.loopHotKeys)
     }
 
     step(entry, layer := 1) {

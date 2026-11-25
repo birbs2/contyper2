@@ -37,6 +37,7 @@ class CTConfig(configparser.ConfigParser):
     def reload_rs(self):
         try:
             self.ruleset = Ruleset(Path(self.get("Files", "selectedfile")))
+            self.set("Shortcuts", "layers", str(self.ruleset.num_layers))
         except OSError:
             self.set("Files", "selectedfile", str(self.joinpath("presets", "CT_ipa.yaml")))
             self.write_()

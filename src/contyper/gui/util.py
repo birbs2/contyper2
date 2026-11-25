@@ -1,7 +1,22 @@
+from PyQt6.QtGui import QIcon
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMainWindow, QWidget, QMenu
+
+from src.contyper.core.config import config as cf
 
 
 class CTWindow(QMainWindow):
+    def __init__(self, name="Contyper Window"):
+        super().__init__()
+        self.setWindowIcon(QIcon(str(cf.joinpath("assets", "logo.png"))))
+        self.setWindowTitle(name)
+
+        self.setWindowFlags(
+            Qt.WindowType.Window
+            | Qt.WindowType.WindowTitleHint
+            | Qt.WindowType.WindowCloseButtonHint
+        )
+
     def closeEvent(self, a0):
         a0.ignore()
         self.hide()
